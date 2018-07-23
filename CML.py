@@ -249,11 +249,13 @@ class CML(object):
         # The second one for feature projector NN is normalized by the number of items.
         gds = []
         gds.append(tf.train
-                   .AdagradOptimizer(self.master_learning_rate)
+                   #.AdagradOptimizer(self.master_learning_rate)
+                   .AdamOptimizer(self.master_learning_rate)
                    .minimize(self.loss, var_list=[self.user_embeddings, self.item_embeddings]))
         if self.feature_projection is not None:
             gds.append(tf.train
-                       .AdagradOptimizer(self.master_learning_rate)
+                       #.AdagradOptimizer(self.master_learning_rate)
+                       .AdamOptimizer(self.master_learning_rate)
                        .minimize(self.feature_loss / self.n_items))
 
         with tf.control_dependencies(gds):
